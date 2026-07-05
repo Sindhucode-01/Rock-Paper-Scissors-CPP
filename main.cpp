@@ -2,18 +2,31 @@
 #include <ctime>
 using namespace std;
 
+void Title()
+{
+    cout << "\n====================================\n";
+    cout << "      ROCK PAPER SCISSORS\n";
+    cout << "====================================\n";
+}
+
 char UserChoice()
 {
     char player;
-    cout << "Rock-Paper-Scissors Game!\n";
+
     do
     {
-        cout << "-------------------------\n";
-        cout << "Choose one of the following:\n";
-        cout << "Enter 'r' for rock\n";
-        cout << "Enter 'p' for paper\n";
-        cout << "Enter 's' for scissors\n";
+        cout << "\nChoose your move:\n";
+        cout << "[r] Rock\n";
+        cout << "[p] Paper\n";
+        cout << "[s] Scissors\n";
+        cout << "Enter your choice: ";
         cin >> player;
+
+        if (player != 'r' && player != 'p' && player != 's')
+        {
+            cout << "\nInvalid choice! Please enter r, p, or s.\n";
+        }
+
     } while (player != 'r' && player != 'p' && player != 's');
 
     return player;
@@ -21,7 +34,6 @@ char UserChoice()
 
 char ComputerChoice()
 {
-    srand(time(NULL));
     int num = rand() % 3 + 1;
 
     switch (num)
@@ -33,85 +45,108 @@ char ComputerChoice()
     case 3:
         return 's';
     }
-    return 0;
+
+    return ' ';
 }
-void showChoice(char choice)
+
+void displayChoice(char choice)
 {
     switch (choice)
     {
     case 'r':
-        cout << "Rock\n";
+        cout << "Rock";
         break;
     case 'p':
-        cout << "Paper\n";
+        cout << "Paper";
         break;
     case 's':
-        cout << "Scissors\n";
+        cout << "Scissors";
         break;
     }
 }
-void Winner(char player, char computer)
+
+void displayWinner(char player, char computer)
 {
-    switch (player)
+
+    if (player == 'r')
     {
-    case 'r':
         if (computer == 'r')
-        {
-            cout << "It's a tie!\n";
-        }
+            cout << "It's a Tie!\n";
         else if (computer == 'p')
-        {
-            cout << "You lose!\n";
-        }
+            cout << "You Lose!\n";
         else
-        {
-            cout << "You win!\n";
-        }
-        break;
-    case 'p':
+            cout << "You Win!\n";
+    }
+
+    else if (player == 'p')
+    {
         if (computer == 'r')
-        {
-            cout << "You win!\n";
-        }
+            cout << "You Win!\n";
         else if (computer == 'p')
-        {
-            cout << "It's a tie!\n";
-        }
+            cout << "It's a Tie!\n";
         else
-        {
-            cout << "You lose!\n";
-        }
-        break;
-    case 's':
+            cout << "You Lose!\n";
+    }
+
+    else
+    {
         if (computer == 'r')
-        {
-            cout << "You lose!\n";
-        }
+            cout << "You Lose!\n";
         else if (computer == 'p')
-        {
-            cout << "You win!\n";
-        }
+            cout << "You Win!\n";
         else
-        {
-            cout << "It's a tie!\n";
-        }
-        break;
+            cout << "It's a Tie!\n";
     }
 }
 
 int main()
 {
+
+    srand(time(NULL));
+
     char player;
     char computer;
+    char playAgain;
 
-    player = UserChoice();
-    cout << "Your choice: ";
-    showChoice(player);
+    do
+    {
 
-    computer = ComputerChoice();
-    cout << "Computer's Choice: ";
-    showChoice(computer);
+        Title();
 
-    Winner(player, computer);
+        player = UserChoice();
+
+        computer = ComputerChoice();
+
+        cout << "\n------------------------------------\n";
+        cout << "Your Choice     : ";
+        displayChoice(player);
+
+        cout << "\nComputer Choice : ";
+        displayChoice(computer);
+
+        cout << "\n------------------------------------\n\n";
+
+        displayWinner(player, computer);
+
+        do
+        {
+            cout << "\nPlay again? (y/n): ";
+            cin >> playAgain;
+
+            if (playAgain != 'y' && playAgain != 'Y' &&
+                playAgain != 'n' && playAgain != 'N')
+            {
+                cout << "Invalid choice! Please enter y or n.\n";
+            }
+
+        } while (playAgain != 'y' && playAgain != 'Y' &&
+                 playAgain != 'n' && playAgain != 'N');
+
+    } while (playAgain == 'y' || playAgain == 'Y');
+
+    cout << "\n====================================\n";
+    cout << "Thanks for playing!\n";
+    cout << "====================================\n";
+
     return 0;
 }
