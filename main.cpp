@@ -49,7 +49,7 @@ char ComputerChoice()
     return ' ';
 }
 
-void displayChoice(char choice)
+void ShowChoice(char choice)
 {
     switch (choice)
     {
@@ -65,68 +65,114 @@ void displayChoice(char choice)
     }
 }
 
-void displayWinner(char player, char computer)
+char displayWinner(char player, char computer)
 {
-
     if (player == 'r')
     {
         if (computer == 'r')
+        {
             cout << "It's a Tie!\n";
+            return 'D';
+        }
         else if (computer == 'p')
+        {
             cout << "You Lose!\n";
+            return 'L';
+        }
         else
+        {
             cout << "You Win!\n";
+            return 'W';
+        }
     }
 
     else if (player == 'p')
     {
         if (computer == 'r')
+        {
             cout << "You Win!\n";
+            return 'W';
+        }
         else if (computer == 'p')
+        {
             cout << "It's a Tie!\n";
+            return 'D';
+        }
         else
+        {
             cout << "You Lose!\n";
+            return 'L';
+        }
     }
 
     else
     {
         if (computer == 'r')
+        {
             cout << "You Lose!\n";
+            return 'L';
+        }
         else if (computer == 'p')
+        {
             cout << "You Win!\n";
+            return 'W';
+        }
         else
+        {
             cout << "It's a Tie!\n";
+            return 'D';
+        }
     }
+}
+
+void displayScore(int wins, int losses, int draws)
+{
+    cout << "\n------------- SCORE -------------\n";
+    cout << "Wins   : " << wins << endl;
+    cout << "Losses : " << losses << endl;
+    cout << "Draws  : " << draws << endl;
+    cout << "---------------------------------\n";
 }
 
 int main()
 {
-
     srand(time(NULL));
 
     char player;
     char computer;
     char playAgain;
+    char result;
+
+    int wins = 0;
+    int losses = 0;
+    int draws = 0;
 
     do
     {
-
         Title();
 
         player = UserChoice();
-
         computer = ComputerChoice();
 
         cout << "\n------------------------------------\n";
         cout << "Your Choice     : ";
-        displayChoice(player);
+        ShowChoice(player);
 
         cout << "\nComputer Choice : ";
-        displayChoice(computer);
+        ShowChoice(computer);
 
         cout << "\n------------------------------------\n\n";
 
-        displayWinner(player, computer);
+        result = displayWinner(player, computer);
+
+        if (result == 'W')
+            wins++;
+        else if (result == 'L')
+            losses++;
+        else
+            draws++;
+
+        displayScore(wins, losses, draws);
 
         do
         {
